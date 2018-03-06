@@ -1,9 +1,6 @@
 package com.lx.designpattern.simplefactory;
 
-import com.lx.designpattern.mobilephone.HuaWei;
-import com.lx.designpattern.mobilephone.IPhoneX;
-import com.lx.designpattern.mobilephone.Phone;
-import com.lx.designpattern.mobilephone.XiaoMi;
+import com.lx.designpattern.mobilephone.*;
 
 /**
  * 小作坊: 简单工厂, 啥也能做， 要啥给啥
@@ -18,7 +15,9 @@ public class SimpleFactory{
             return new XiaoMi();
         }else if(name.equalsIgnoreCase("huawei")){
             return new HuaWei();
-        }else{
+        }else if(name.equalsIgnoreCase("nokia")){
+            return new Nokia();
+        }else {
             return null;
         }
     }

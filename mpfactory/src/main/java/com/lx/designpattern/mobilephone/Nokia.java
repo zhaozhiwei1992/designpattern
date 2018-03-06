@@ -1,23 +1,24 @@
 package com.lx.designpattern.mobilephone;
 
-public class XiaoMi implements Phone{
 
-    public XiaoMi(){
+public class Nokia implements Phone {
 
+    public Nokia() {
     }
 
     private String origin;
 
-    public XiaoMi(String origin) {
+    public Nokia(String origin) {
         this.origin = origin;
     }
 
+    @Override
     public String getName() {
-        return "XIAOMI";
+        return "NOKIA";
     }
 
     @Override
     public String getOrigin() {
-        return origin;
+        return this.origin;
     }
 }
