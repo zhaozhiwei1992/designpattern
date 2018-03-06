@@ -9,7 +9,7 @@ import com.lx.designpattern.mobilephone.Phone;
  * 易于扩展
  * 基本的逻辑都抽象出来， 而且可以进行随意组合, 用户只能用现有的功能，提高健壮性
  *
- * 适合既做产品， 并且产品分组, 分为 大陆\ 港版
+ * 适合既做产品， 并且产品分流水线, 分为 大陆\ 港版
  *
  */
 public abstract class AbstractFactory {
