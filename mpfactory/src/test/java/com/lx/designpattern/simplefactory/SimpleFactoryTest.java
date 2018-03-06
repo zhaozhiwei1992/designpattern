@@ -12,8 +12,10 @@ public class SimpleFactoryTest {
     @Test
     public void testGetPhone() {
 
-        // System.out.println(new Telunsu().getName());
         SimpleFactory factory = new SimpleFactory();
         assertEquals("xiaomi",factory.getPhone("xiaomi").getName().toLowerCase());
+        assertEquals("iphonex",factory.getPhone("iphonex").getName().toLowerCase());
+        assertEquals("huawei",factory.getPhone("huawei").getName().toLowerCase());
+
     }
 }
