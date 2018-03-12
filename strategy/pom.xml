@@ -8,12 +8,17 @@
     <version>1.0-SNAPSHOT</version>
     <relativePath>../aggregator/pom.xml</relativePath>
   </parent>
+
   <groupId>com.lx.designpattern</groupId>
-  <artifactId>mpfactory</artifactId>
+  <artifactId>strategy</artifactId>
   <packaging>jar</packaging>
 
-  <name>mpfactory</name>
+  <name>strategy</name>
   <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
 
   <dependencies>
     <dependency>
