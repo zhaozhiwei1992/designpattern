@@ -10,11 +10,10 @@
   </parent>
 
   <groupId>com.lx.designpattern</groupId>
-  <artifactId>strategy</artifactId>
+  <artifactId>templatemethod</artifactId>
   <packaging>jar</packaging>
 
-  <name>strategy</name>
-  <url>http://maven.apache.org</url>
+  <name>templatemethod</name>
 
   <dependencies>
     <dependency>
