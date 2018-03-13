@@ -1,7 +1,7 @@
 package com.lx.designpattern.loginway;
 
 /**
- * 华为手机
+ * 普通登录
  */
 public class Normal implements LoginWay {
 

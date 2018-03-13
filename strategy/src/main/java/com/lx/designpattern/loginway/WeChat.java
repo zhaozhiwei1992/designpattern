@@ -1,7 +1,7 @@
 package com.lx.designpattern.loginway;
 
 /**
- * 华为手机
+ * 微信登录
  */
 public class WeChat implements LoginWay {
 

@@ -43,4 +43,17 @@ public class LoginStategyTest {
         //新加一个登录方式, 需要修改客户端的分支条件
 
     }
+
+    /**
+     * 测试采用策略模式与简单工厂反射结合
+     */
+    @Test
+    public void testLogin2() throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+
+        //约定好登录方式标识，传入的标识直接就是类名
+        String loginWay = "WeChat";
+        LoginStategy loginStategy = new LoginStategy(loginWay);
+        assertTrue(loginStategy.login());
+
+    }
 }
