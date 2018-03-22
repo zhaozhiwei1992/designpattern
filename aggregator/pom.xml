@@ -12,6 +12,8 @@
   <modules>
     <module>../mpfactory</module>
     <module>../strategy</module>
+    <module>../adapter</module>
+    <module>../decorator</module>
   </modules>
 
   <properties>
