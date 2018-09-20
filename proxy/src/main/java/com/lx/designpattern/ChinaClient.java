@@ -1,4 +1,4 @@
-package com.lx.designpattern.staticproxy;
+package com.lx.designpattern;
 
 import com.lx.designpattern.Server;
 
@@ -12,18 +12,20 @@ public class ChinaClient implements Server {
 
     @Override
     public boolean internetgoogle(Boolean ispass) {
-        if(ispass != null && ispass){
-            System.out.println(" 请求地址: www.google.com 通过");
+        System.out.println(this);
+        if(ispass){
+            System.out.println("请求地址: www.google.com 通过");
             return true ;
         }else{
-            System.out.println(" 请求地址: www.google.com 拒绝");
+            System.out.println("请求地址: www.google.com 拒绝");
             return false;
         }
     }
 
     @Override
     public boolean internetbaidu(Boolean ispass) {
-        System.out.println(" 请求地址: www.baidu.com 通过");
+        System.out.println(this);
+        System.out.println("请求地址: www.baidu.com 通过");
         return true;
     }
 }

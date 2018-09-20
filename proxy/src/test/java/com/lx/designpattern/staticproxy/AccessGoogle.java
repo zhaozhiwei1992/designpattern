@@ -1,5 +1,6 @@
 package com.lx.designpattern.staticproxy;
 
+import com.lx.designpattern.ChinaClient;
 import com.lx.designpattern.Server;
 import org.junit.Assert;
 import org.junit.Test;
