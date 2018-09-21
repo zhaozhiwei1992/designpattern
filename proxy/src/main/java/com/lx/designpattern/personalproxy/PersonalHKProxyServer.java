@@ -1,15 +1,14 @@
 package com.lx.designpattern.personalproxy;
 
+import com.lx.designpattern.ChinaClient;
 import com.lx.designpattern.Server;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
+import javax.tools.JavaCompiler;
+import javax.tools.JavaFileObject;
+import javax.tools.StandardJavaFileManager;
+import javax.tools.ToolProvider;
+import java.io.*;
+import java.lang.reflect.*;
 
 /**
  * @author 赵志伟
@@ -32,14 +31,28 @@ public class PersonalHKProxyServer implements InvocationHandler {
      *
      * @return
      */
-    public Object getInstence() {
+    public Object getInstence(){
         // 加载class
         // 返回obj
         // 生成class文件
         Class<?> clazz = client.getClass();
+        //根据被代理对象的接口来生成一个具体的代理实现
         Class<?> cl = getProxyClass0(clazz.getInterfaces()[0]);
-//        final Constructor<?> cons = cl.getConstructor(new Class[]{InvocationHandler.class});
-//        return cons.newInstance(new Object[]{this})
+        Constructor<?> cons = null;
+        try {
+            cons = cl.getConstructor(new Class[]{InvocationHandler.class});
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        try {
+            return cons.newInstance(new Object[]{this});
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
 //        return Proxy.newProxyInstance(clazz.getClassLoader(),clazz.getInterfaces(),this);
         return null;
     }
@@ -63,7 +76,7 @@ public class PersonalHKProxyServer implements InvocationHandler {
         builder.append("import java.lang.reflect.Method;\n");
         builder.append("public final class $Proxy0ByZhao implements " + clazz.getSimpleName() + " {\n");
         builder.append("    protected InvocationHandler h;\n");
-        builder.append("protected $Proxy0ByZhao(InvocationHandler h) {\n");
+        builder.append("public $Proxy0ByZhao(InvocationHandler h) {\n");
         builder.append("        this.h = h;\n");
         builder.append("    }\n");
 
@@ -93,9 +106,12 @@ public class PersonalHKProxyServer implements InvocationHandler {
 
         //写出到磁盘
         FileWriter fileWriter = null;
-        String path = System.getProperty("user.dir");
+//        String path = System.getProperty("user.dir");
+        System.out.println(this.getClass().getResource("").getPath());
+//        File file = new File(path + "\\src\\main\\java\\com\\lx\\designpattern\\personalproxy\\$Proxy0ByZhao.java");
+        File file = new File(this.getClass().getResource("").getPath() + "/$Proxy0ByZhao.java");
         try {
-            fileWriter = new FileWriter(path + "\\src\\main\\java\\com\\lx\\designpattern\\personalproxy\\$Proxy0ByZhao.java");
+            fileWriter = new FileWriter(file);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -112,14 +128,37 @@ public class PersonalHKProxyServer implements InvocationHandler {
             }
         }
 
+        //编译java文件为class
+        JavaCompiler javaCompiler = ToolProvider.getSystemJavaCompiler();
+        StandardJavaFileManager standardFileManager = javaCompiler.getStandardFileManager(null, null, null);
+        Iterable<? extends JavaFileObject> javaFileObjects = standardFileManager.getJavaFileObjects(file);
+        JavaCompiler.CompilationTask task = javaCompiler.getTask(null, standardFileManager, null, null, null, javaFileObjects);
+        task.call();
 
+        //载入到jvm中
+
+        try {
+            return new PersonalClassLoader().loadClass("$Proxy0ByZhao");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         args = new Object[]{true};//代理执行方法前可以搞事情
-        System.out.println("mylog +++++++++ 动态代理调用方法 " + method.getName());
+        System.out.println("mylog +++++++++ 自定义动态代理调用方法 " + method.getName());
         return method.invoke(this.client, args);
+    }
+
+    /**
+     * 模拟动态代理实现
+     * @param args
+     */
+    public static void main(String[] args) {
+        Server chinaClient = new ChinaClient();
+        Server proxyServer = (Server)new PersonalHKProxyServer(chinaClient).getInstence();
+        proxyServer.internetgoogle(false);
     }
 }
